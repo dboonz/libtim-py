@@ -243,8 +243,8 @@ def fit_zernike(wavefront, zern_data={}, nmodes=10, startmode=1, fitweight=None,
 		center = -np.r_[center] * min(wavefront.shape)
 
 	# Make cropping slices to select only central part of the wavefront
-	xslice = slice(center[0]-rad, center[0]+rad)
-	yslice = slice(center[1]-rad, center[1]+rad)
+	xslice = slice(int(center[0]-rad), int(center[0]+rad))
+	yslice = slice(int(center[1]-rad), int(center[1]+rad))
 
 	# Compute Zernike basis if absent
 	if (not zern_data.has_key('modes')):
@@ -271,7 +271,7 @@ def fit_zernike(wavefront, zern_data={}, nmodes=10, startmode=1, fitweight=None,
 
 	wf_zern_vec = 0
 	grid_vec = grid_mask.reshape(-1)
-	if (fitweight != None):
+	if np.any(fitweight != None):
 		# Weighed LSQ fit with data. Only fit inside grid_mask
 
 		# Multiply weight with binary mask, reshape to vector
